@@ -6,7 +6,16 @@
     <bean id="HelloSpring" class="com.qzj.learn.HelloSpring">
         <!--将其变量msg通过依赖注入-->
         <property name="msg">
-            <value>Hello, Spring!</value>
+            <value>Spring</value>
+        </property>
+        <!--通过构造方法进行注入-->
+<!--        <constructor-arg index="0">-->
+<!--            <value>Hello, Spring!</value>-->
+<!--        </constructor-arg>-->
+        <!--date变量通过依赖注入来完成-->
+        <property name="date">
+            <ref bean="date"/>
         </property>
     </bean>
+    <bean id="date" class="java.util.Date"/>
 </beans>
