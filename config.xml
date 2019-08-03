@@ -1,21 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--Bean的配置文档-->
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
         "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
-    <!--定义一个Bean-->
+    <!--定义一个Bean（Java软件组件）, id是这个Bean的唯一标识，class指出这个Bean的来源，
+    singleton指定这个Bean是否为单例模式，depends-on指定这个Bean初始化前，强制初始化date，
+    init-method指定Bean中要初始化的方法为init()-->
     <bean id="HelloSpring" class="com.qzj.learn.HelloSpring">
-        <!--将其变量msg通过依赖注入-->
+        <!--将其变量msg通过Setter注入-->
         <property name="msg">
-            <value>Spring</value>
+            <value>Hello, Spring!</value>
+            <!--对null值处理的两种方式-->
+<!--            <value>null</value>-->
+<!--            <null/>-->
         </property>
         <!--通过构造方法进行注入-->
 <!--        <constructor-arg index="0">-->
 <!--            <value>Hello, Spring!</value>-->
 <!--        </constructor-arg>-->
-        <!--date变量通过依赖注入来完成-->
+        <!--date变量通过Setter注入来完成-->
         <property name="date">
-            <ref bean="date"/>
+            <!--将date属性设为参考id为date的Bean-->
+<!--            <ref bean="date"/>-->
+            <!--在属性中直接定义Bean-->
+            <bean id="date" class="java.util.Date"/>
         </property>
     </bean>
-    <bean id="date" class="java.util.Date"/>
+    <!--定义一个id为date的Bean-->
+<!--    <bean id="date" class="java.util.Date"/>-->
+    <bean id="ChHello" class="com.qzj.learn.ChHello">
+        <property name="msg">
+            <value>Spring</value>
+        </property>
+    </bean>
+    <bean id="EnHello" class="com.qzj.learn.EnHello">
+        <property name="msg">
+            <value>Spring</value>
+        </property>
+    </bean>
 </beans>
