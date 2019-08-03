@@ -14,10 +14,10 @@ public class HelloSpring {
         this.msg = msg;
     }
 
-//    public void init() {
-//        this.msg = "Hello, Spring!";
-//        this.date = new Date();
-//    }
+    public void init() {
+        this.msg = "Hello, Spring!";
+        this.date = new Date();
+    }
 
     public void setDate(Date date) {
         this.date = date;
