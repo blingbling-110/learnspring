@@ -1,33 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--Bean的配置文档-->
+
+<!--DOCTYPE声明：根据DTD验证XML-->
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
         "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
-    <!--定义一个Bean（Java软件组件）, id是这个Bean的唯一标识，class指出这个Bean的来源，
-    singleton指定这个Bean是否为单例模式，depends-on指定这个Bean初始化前，强制初始化date，
-    init-method指定Bean中要初始化的方法为init()-->
-    <bean id="HelloSpring" class="com.qzj.learn.HelloSpring" init-method="init">
+    <!--定义一个Bean（Java软件组件）。
+    id是这个Bean的唯一标识；
+    class指出这个Bean的来源；
+    singleton指定这个Bean是否为单例模式，默认是单例模式；
+    depends-on指定Bean初始化前强制初始化的Bean；
+    init-method指定Bean中要初始化的方法；
+    destroy-method指定销毁Bean的方法；
+    autowire指定自动装配模式，默认是no，即禁用（属性）自动装配；
+    dependency-check指定依赖检查的模式，默认是none，即禁用依赖检查-->
+    <bean id="HelloSpring" class="com.qzj.learn.HelloSpring">
         <!--将其变量msg通过Setter注入-->
-<!--        <property name="msg">-->
-<!--            <value>Hello, Spring!</value>-->
+        <property name="msg">
+            <value>Hello, Spring!</value>
             <!--对null值处理的两种方式-->
             <!--            <value>null</value>-->
             <!--            <null/>-->
-<!--        </property>-->
+        </property>
         <!--通过构造方法进行注入-->
         <!--        <constructor-arg index="0">-->
         <!--            <value>Hello, Spring!</value>-->
         <!--        </constructor-arg>-->
         <!--date变量通过Setter注入来完成-->
-<!--        <property name="date">-->
-            <!--将date属性设为参考id为date的Bean-->
-            <!--            <ref bean="date"/>-->
+        <property name="date">
+            <!--将date属性设为参考id为date的Bean，可通过local, bean, parent属性指定-->
+            <ref bean="date"/>
             <!--在属性中直接定义Bean-->
-<!--            <bean id="date" class="java.util.Date"/>-->
-<!--        </property>-->
+            <!--            <bean id="date" class="java.util.Date"/>-->
+        </property>
     </bean>
     <!--定义一个id为date的Bean-->
-    <!--    <bean id="date" class="java.util.Date"/>-->
+    <bean id="date" class="java.util.Date"/>
+
     <bean id="ChHello" class="com.qzj.learn.ChHello">
         <property name="msg">
             <value>Spring</value>
@@ -38,4 +47,54 @@
             <value>Spring</value>
         </property>
     </bean>
+
+    <bean id="Collections" class="com.qzj.learn.Collections">
+        <property name="list">
+            <!--集合List元素的配置方式-->
+            <list>
+                <value>gf</value>
+                <value>gd</value>
+                <value>HelloSpring</value>
+            </list>
+        </property>
+        <property name="set">
+            <!--集合Set元素的配置方式-->
+            <set>
+                <value>gf</value>
+                <value>gd</value>
+                <value>HelloSpring</value>
+            </set>
+        </property>
+        <property name="map">
+            <!--集合Map元素的配置方式-->
+            <map>
+                <entry key="gf">
+                    <value>HelloSpring</value>
+                </entry>
+                <entry key="gd">
+                    <value>HelloSpring</value>
+                </entry>
+            </map>
+        </property>
+        <property name="props">
+            <!--集合Properties元素的配置方式-->
+            <props>
+                <prop key="gf">HelloSpring</prop>
+                <prop key="gd">HelloSpring</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--负责国际化支持-->
+    <bean id="messageSource" class=
+            "org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename">
+            <!--国际化支持的定义在文件名为messages的文件中-->
+            <value>messages</value>
+        </property>
+    </bean>
+
+    <!--负责事件传递-->
+    <bean id="log" class="com.qzj.learn.Log"/>
+    <bean id="listener" class="com.qzj.learn.LogListener"/>
 </beans>
