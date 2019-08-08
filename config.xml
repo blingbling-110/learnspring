@@ -18,20 +18,20 @@
         <!--将其变量msg通过Setter注入-->
         <property name="msg">
             <value>Hello, Spring!</value>
-            <!--对null值处理的两种方式-->
-            <!--            <value>null</value>-->
-            <!--            <null/>-->
+            <!--            &lt;!&ndash;对null值处理的两种方式&ndash;&gt;-->
+            <!--                        <value>null</value>-->
+            <!--                        <null/>-->
         </property>
-        <!--通过构造方法进行注入-->
-        <!--        <constructor-arg index="0">-->
-        <!--            <value>Hello, Spring!</value>-->
-        <!--        </constructor-arg>-->
-        <!--date变量通过Setter注入来完成-->
+        <!--        &lt;!&ndash;通过构造方法进行注入&ndash;&gt;-->
+        <!--                <constructor-arg index="0">-->
+        <!--                    <value>Hello, Spring!</value>-->
+        <!--                </constructor-arg>-->
+        <!--        &lt;!&ndash;date变量通过Setter注入来完成&ndash;&gt;-->
         <property name="date">
             <!--将date属性设为参考id为date的Bean，可通过local, bean, parent属性指定-->
             <ref bean="date"/>
-            <!--在属性中直接定义Bean-->
-            <!--            <bean id="date" class="java.util.Date"/>-->
+            <!--            &lt;!&ndash;在属性中直接定义Bean&ndash;&gt;-->
+            <!--                        <bean id="date" class="java.util.Date"/>-->
         </property>
     </bean>
     <!--定义一个id为date的Bean-->
@@ -97,4 +97,54 @@
     <!--负责事件传递-->
     <bean id="log" class="com.qzj.learn.Log"/>
     <bean id="listener" class="com.qzj.learn.LogListener"/>
+
+    <!--通知(Advice)-->
+    <bean id="aopLog" class="com.qzj.learn.LogAround"/>
+    <!--需代理的目标类-->
+    <bean id="timeBook" class="com.qzj.learn.TimeBook"/>
+    <!--    &lt;!&ndash;代理目标类的所有方法&ndash;&gt;-->
+    <!--        <bean id="logProxy" class="org.springframework.aop.framework.ProxyFactoryBean">-->
+    <!--            &lt;!&ndash;需代理的接口&ndash;&gt;-->
+    <!--            <property name="proxyInterfaces">-->
+    <!--                &lt;!&ndash;proxyInterfaces属性只支持使用字符串的方式进行注入，不支持使用Bean的依赖方式进行注入&ndash;&gt;-->
+    <!--                <value>com.qzj.impl.TimeBookInterface</value>-->
+    <!--            </property>-->
+    <!--            &lt;!&ndash;需代理的目标类&ndash;&gt;-->
+    <!--            <property name="target">-->
+    <!--                <ref bean="timeBook"/>-->
+    <!--            </property>-->
+    <!--            &lt;!&ndash;通知(Advice)&ndash;&gt;-->
+    <!--            <property name="interceptorNames">-->
+    <!--                <list>-->
+    <!--                    <value>aopLog</value>-->
+    <!--                </list>-->
+    <!--            </property>-->
+    <!--        </bean>-->
+    <!--设定Advice和要指定的方法-->
+    <bean id="logAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <!--指定通知(Advice)-->
+        <property name="advice">
+            <ref bean="aopLog"/>
+        </property>
+        <!--指定要代理的方法-->
+        <property name="patterns">
+            <value>.*doAuditing.*</value>
+        </property>
+    </bean>
+    <bean id="logProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <!--需代理的接口-->
+        <property name="proxyInterfaces">
+            <value>com.qzj.impl.TimeBookInterface</value>
+        </property>
+        <!--需代理的目标类-->
+        <property name="target">
+            <ref bean="timeBook"/>
+        </property>
+        <!--通知(Advice)-->
+        <property name="interceptorNames">
+            <list>
+                <value>logAdvisor</value>
+            </list>
+        </property>
+    </bean>
 </beans>
