@@ -98,6 +98,7 @@
     <bean id="log" class="com.qzj.learn.Log"/>
     <bean id="listener" class="com.qzj.learn.LogListener"/>
 
+    <!--AOP in Spring-->
     <!--通知(Advice)-->
     <bean id="aopLog" class="com.qzj.learn.LogAround"/>
     <!--需代理的目标类-->
@@ -120,7 +121,7 @@
     <!--                </list>-->
     <!--            </property>-->
     <!--        </bean>-->
-    <!--设定Advice和要指定的方法-->
+    <!--设定通知(Advice)和要代理的方法-->
     <bean id="logAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
         <!--指定通知(Advice)-->
         <property name="advice">
