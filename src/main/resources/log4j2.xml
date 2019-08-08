@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Configuration status="trace" strict="true" name="LogConfig">
+<Configuration status="info" strict="true" name="LogConfig">
     <Properties>
-        <Property name="filepath">/tmp/log4j2</Property>
+        <Property name="filepath">./log4j2</Property>
     </Properties>
     <Appenders>
         <!-- ConsoleAppender -->
@@ -19,7 +19,7 @@
         <!-- filePattern 日志回滚的文件命名规则 -->
         <RollingFile name="logService"
                      fileName="${filepath}/logService.log"
-                     filePattern="${filepath}/bak/logService-%d{yy-MM-dd HH:mm:ss}.log.gz">
+                     filePattern="${filepath}/bak/logService-%d{yy-MM-dd HH_mm_ss}.log.gz">
             <PatternLayout>
                 <Pattern>[%d] - [%c] - [%highlight{%level}] - [%method] - [%t] - %msg%n</Pattern>
             </PatternLayout>
