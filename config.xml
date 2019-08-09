@@ -125,7 +125,8 @@
     <bean id="logAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
         <!--指定通知(Advice)-->
         <property name="advice">
-            <ref bean="aopLog"/>
+<!--            <ref bean="aopLog"/>-->
+            <ref bean="logBefore"/>
         </property>
         <!--指定要代理的方法-->
         <property name="patterns">
@@ -148,4 +149,23 @@
             </list>
         </property>
     </bean>
+
+    <!--新增的AOP业务-->
+    <bean id="finance" class="com.qzj.learn.Finance"/>
+    <bean id="financeLog" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces">
+            <value>com.qzj.impl.FinanceInterface</value>
+        </property>
+        <property name="target">
+            <ref bean="finance"/>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>aopLog</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--Before通知-->
+    <bean id="logBefore" class="com.qzj.learn.LogBefore"/>
 </beans>
