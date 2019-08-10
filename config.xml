@@ -103,39 +103,11 @@
     <bean id="aopLog" class="com.qzj.learn.LogAround"/>
     <!--需代理的目标类-->
     <bean id="timeBook" class="com.qzj.learn.TimeBook"/>
-    <!--    &lt;!&ndash;代理目标类的所有方法&ndash;&gt;-->
-    <!--        <bean id="logProxy" class="org.springframework.aop.framework.ProxyFactoryBean">-->
-    <!--            &lt;!&ndash;需代理的接口&ndash;&gt;-->
-    <!--            <property name="proxyInterfaces">-->
-    <!--                &lt;!&ndash;proxyInterfaces属性只支持使用字符串的方式进行注入，不支持使用Bean的依赖方式进行注入&ndash;&gt;-->
-    <!--                <value>com.qzj.impl.TimeBookInterface</value>-->
-    <!--            </property>-->
-    <!--            &lt;!&ndash;需代理的目标类&ndash;&gt;-->
-    <!--            <property name="target">-->
-    <!--                <ref bean="timeBook"/>-->
-    <!--            </property>-->
-    <!--            &lt;!&ndash;通知(Advice)&ndash;&gt;-->
-    <!--            <property name="interceptorNames">-->
-    <!--                <list>-->
-    <!--                    <value>aopLog</value>-->
-    <!--                </list>-->
-    <!--            </property>-->
-    <!--        </bean>-->
-    <!--设定通知(Advice)和要代理的方法-->
-    <bean id="logAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
-        <!--指定通知(Advice)-->
-        <property name="advice">
-<!--            <ref bean="aopLog"/>-->
-            <ref bean="logBefore"/>
-        </property>
-        <!--指定要代理的方法-->
-        <property name="patterns">
-            <value>.*doAuditing.*</value>
-        </property>
-    </bean>
+    <!--切入点、通知的管理器(Advisor)-->
     <bean id="logProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
         <!--需代理的接口-->
         <property name="proxyInterfaces">
+            <!--proxyInterfaces属性只支持使用字符串的方式进行注入，不支持使用Bean的依赖方式进行注入-->
             <value>com.qzj.impl.TimeBookInterface</value>
         </property>
         <!--需代理的目标类-->
@@ -145,8 +117,25 @@
         <!--通知(Advice)-->
         <property name="interceptorNames">
             <list>
+                <!--代理目标类的所有方法-->
+                <!--                        <value>aopLog</value>-->
+                <!--设定通知(Advice)和要代理的方法-->
                 <value>logAdvisor</value>
             </list>
+        </property>
+    </bean>
+    <!--设定通知(Advice)和要代理的方法-->
+    <bean id="logAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <!--指定通知(Advice)-->
+        <property name="advice">
+                        <ref bean="aopLog"/>
+            <!--            <ref bean="logBefore"/>-->
+            <!--            <ref bean="logAfter"/>-->
+            <!--            <ref bean="logThrow"/>-->
+        </property>
+        <!--指定要代理的方法-->
+        <property name="patterns">
+            <value>.*doAuditing.*</value>
         </property>
     </bean>
 
@@ -168,4 +157,10 @@
 
     <!--Before通知-->
     <bean id="logBefore" class="com.qzj.learn.LogBefore"/>
+
+    <!--After通知-->
+    <bean id="logAfter" class="com.qzj.learn.LogAfter"/>
+
+    <!--Throw通知-->
+    <bean id="logThrow" class="com.qzj.learn.LogThrow"/>
 </beans>
