@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--Bean的配置文档-->
+
+<!--DOCTYPE声明：根据DTD验证XML-->
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="exceptionHandler" class="com.qzj.learn.ExceptionHandler"/>
+    <bean id="timeHandler" class="com.qzj.learn.TimeHandler"/>
+    <bean id="logic1" class="com.qzj.learn.Logic1"/>
+    <bean id="logic2" class="com.qzj.learn.Logic2"/>
+    <!--Advisor-->
+    <bean id="exceptionHanlderAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <property name="advice">
+            <ref bean="exceptionHandler"/>
+        </property>
+        <!--对指定类的任何方法有效-->
+        <property name="patterns">
+            <value>.*.*</value>
+        </property>
+    </bean>
+    <bean id="timeHanlderAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <property name="advice">
+            <ref bean="timeHandler"/>
+        </property>
+        <!--对指定类的任何方法有效-->
+        <property name="patterns">
+            <value>.*.*</value>
+        </property>
+    </bean>
+    <!--使用自动代理-->
+    <bean id="autoProxyCreator" class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+</beans>

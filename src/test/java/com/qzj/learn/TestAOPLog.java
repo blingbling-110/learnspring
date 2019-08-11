@@ -8,8 +8,8 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 public class TestAOPLog {
     public static void main(String[] args) {
         ApplicationContext actx = new FileSystemXmlApplicationContext("config.xml");
-        TimeBookInterface tbi = (TimeBookInterface)actx.getBean("logProxy");
-        tbi.doAuditing("TimeBook");
+        TimeBookInterface tbi = (TimeBookInterface)actx.getBean("timeBook");
+        tbi.doCheck("TimeBook");
 //        FinanceInterface fni = (FinanceInterface)actx.getBean("financeLog");
 //        fni.doCheck("Finance");
     }

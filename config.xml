@@ -103,13 +103,17 @@
     <bean id="aopLog" class="com.qzj.learn.LogAround"/>
     <!--需代理的目标类-->
     <bean id="timeBook" class="com.qzj.learn.TimeBook"/>
-    <!--切入点、通知的管理器(Advisor)-->
+    <!--使用ProxyFactoryBean创建AOP代理-->
     <bean id="logProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
-        <!--需代理的接口-->
-        <property name="proxyInterfaces">
-            <!--proxyInterfaces属性只支持使用字符串的方式进行注入，不支持使用Bean的依赖方式进行注入-->
-            <value>com.qzj.impl.TimeBookInterface</value>
+        <!--CGLIB代理-->
+        <property name="proxyTargetClass">
+            <value>true</value>
         </property>
+        <!--需代理的接口-->
+        <!--        <property name="proxyInterfaces">-->
+        <!--            &lt;!&ndash;proxyInterfaces属性只支持使用字符串的方式进行注入，不支持使用Bean的依赖方式进行注入&ndash;&gt;-->
+        <!--            <value>com.qzj.impl.TimeBookInterface</value>-->
+        <!--        </property>-->
         <!--需代理的目标类-->
         <property name="target">
             <ref bean="timeBook"/>
@@ -124,18 +128,19 @@
             </list>
         </property>
     </bean>
-    <!--设定通知(Advice)和要代理的方法-->
+    <!--切入点、通知的管理器(Advisor)-->
     <bean id="logAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
         <!--指定通知(Advice)-->
         <property name="advice">
-                        <ref bean="aopLog"/>
+            <ref bean="aopLog"/>
             <!--            <ref bean="logBefore"/>-->
             <!--            <ref bean="logAfter"/>-->
             <!--            <ref bean="logThrow"/>-->
         </property>
         <!--指定要代理的方法-->
         <property name="patterns">
-            <value>.*doAuditing.*</value>
+<!--            <value>.*doAuditing.*</value>-->
+            <value>.*do.*</value>
         </property>
     </bean>
 
@@ -163,4 +168,7 @@
 
     <!--Throw通知-->
     <bean id="logThrow" class="com.qzj.learn.LogThrow"/>
+
+    <!--自动代理-->
+    <bean id="autoProxyCreator" class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
 </beans>
