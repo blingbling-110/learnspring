@@ -105,15 +105,15 @@
     <bean id="timeBook" class="com.qzj.learn.TimeBook"/>
     <!--使用ProxyFactoryBean创建AOP代理-->
     <bean id="logProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
-        <!--CGLIB代理-->
-        <property name="proxyTargetClass">
-            <value>true</value>
-        </property>
         <!--需代理的接口-->
         <!--        <property name="proxyInterfaces">-->
         <!--            &lt;!&ndash;proxyInterfaces属性只支持使用字符串的方式进行注入，不支持使用Bean的依赖方式进行注入&ndash;&gt;-->
         <!--            <value>com.qzj.impl.TimeBookInterface</value>-->
         <!--        </property>-->
+        <!--CGLIB代理-->
+        <property name="proxyTargetClass">
+            <value>true</value>
+        </property>
         <!--需代理的目标类-->
         <property name="target">
             <ref bean="timeBook"/>

@@ -29,5 +29,35 @@
         </property>
     </bean>
     <!--使用自动代理-->
-    <bean id="autoProxyCreator" class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+<!--    <bean id="autoProxyCreator" class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>-->
+
+    <!--使用ProxyFactoryBean创建AOP代理-->
+    <bean id="logic1Proxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <!--指定代理接口-->
+        <property name="proxyInterfaces">
+            <value>com.qzj.impl.LogicInterface</value>
+        </property>
+        <property name="target">
+            <ref bean="logic1"/>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>timeHandler</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="logic2Proxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <!--指定代理类-->
+        <property name="proxyTargetClass">
+            <value>true</value>
+        </property>
+        <property name="target">
+            <ref bean="logic2"/>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>exceptionHandler</value>
+            </list>
+        </property>
+    </bean>
 </beans>
