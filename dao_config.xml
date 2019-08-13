@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--Bean的配置文档-->
+
+<!--DOCTYPE声明：根据DTD验证XML-->
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <!--设定数据源dataSource-->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <!--使用MySQL数据库-->
+        <property name="driverClassName">
+            <value>com.mysql.cj.jdbc.Driver</value>
+        </property>
+        <!--设定URL-->
+        <property name="url">
+            <value>jdbc:mysql://localhost:3306/db_devmngsys
+                ?useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true</value>
+        </property>
+        <!--设定用户名-->
+        <property name="name">
+            <value>root</value>
+        </property>
+        <!--设定密码-->
+        <property name="msg">
+            <value>123456</value>
+        </property>
+    </bean>
+    <!--设定transactionManager-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+    <!--HelloDAO-->
+    <bean id="helloDAO" class="com.qzj.learn.HelloDAO">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+        <property name="transactionManager">
+            <ref bean="transactionManager"/>
+        </property>
+    </bean>
+</beans>
