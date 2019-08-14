@@ -31,8 +31,8 @@
         </property>
     </bean>
     <!--使用自动代理-->
-<!--    <bean id="autoProxyCreator" class=-->
-<!--            "org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>-->
+    <!--    <bean id="autoProxyCreator" class=-->
+    <!--            "org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>-->
 
     <!--使用ProxyFactoryBean创建AOP代理-->
     <bean id="logic1Proxy" class="org.springframework.aop.framework.ProxyFactoryBean">
