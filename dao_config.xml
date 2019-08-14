@@ -13,7 +13,7 @@
         </property>
         <!--设定URL-->
         <property name="url">
-            <value>jdbc:mysql://localhost:3306/db_devmngsys
+            <value>jdbc:mysql://localhost:3306/db_hellodao
                 ?useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true</value>
         </property>
         <!--设定用户名-->
