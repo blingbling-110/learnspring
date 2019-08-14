@@ -13,31 +13,32 @@ import javax.sql.DataSource;
 
 public class HelloDAO {
     private DataSource dataSource;
-    private PlatformTransactionManager transactionManager;
-
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-    public void setTransactionManager(PlatformTransactionManager transactionManager) {
-        this.transactionManager = transactionManager;
-    }
 
     //进行编程式事务处理
-    public int create(String msg) {
-        TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
-        Object result = transactionTemplate.execute(new TransactionCallback() {
-            @Override
-            public Object doInTransaction(TransactionStatus transactionStatus) {
-                //执行新增的操作，向数据库新增一笔记录
-                JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-                int resultObject = jdbcTemplate.update(
-                        "insert into hello values(1, 'gf', 'HelloWord')");
-                return resultObject;
-            }
-        });
-        return (int) result;
-    }
+//    private PlatformTransactionManager transactionManager;
+//
+//    public void setDataSource(DataSource dataSource) {
+//        this.dataSource = dataSource;
+//    }
+//
+//    public void setTransactionManager(PlatformTransactionManager transactionManager) {
+//        this.transactionManager = transactionManager;
+//    }
+//
+//    public int create(String msg) {
+//        TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
+//        Object result = transactionTemplate.execute(new TransactionCallback() {
+//            @Override
+//            public Object doInTransaction(TransactionStatus transactionStatus) {
+//                //执行新增的操作，向数据库新增一笔记录
+//                JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+//                int resultObject = jdbcTemplate.update(
+//                        "insert into hello values(1, 'gf', 'HelloWord')");
+//                return resultObject;
+//            }
+//        });
+//        return (int) result;
+//    }
 
     //自己进行回滚、提交
 //    public int create(String msg) {
@@ -70,4 +71,17 @@ public class HelloDAO {
 //            }
 //        });
 //    }
+
+    //进行声明式事务处理
+    private JdbcTemplate jdbcTemplate;
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+        jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+
+    //注意这里看不到事务处理的代码，一切都在配置文件中
+    public void create(String msg) {
+        jdbcTemplate.update("insert into hello values(1, 'gf', 'HelloWord')");
+    }
 }

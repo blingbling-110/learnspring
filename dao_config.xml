@@ -13,8 +13,7 @@
         </property>
         <!--设定URL-->
         <property name="url">
-            <value>jdbc:mysql://localhost:3306/db_hellodao
-                ?useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true</value>
+            <value>jdbc:mysql://localhost:3306/db_hellodao?useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true</value>
         </property>
         <!--设定用户名-->
         <property name="name">
@@ -26,7 +25,8 @@
         </property>
     </bean>
     <!--设定transactionManager-->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <bean id="transactionManager" class=
+            "org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource">
             <ref bean="dataSource"/>
         </property>
@@ -38,6 +38,31 @@
         </property>
         <property name="transactionManager">
             <ref bean="transactionManager"/>
+        </property>
+    </bean>
+    <!--声明式事务处理-->
+    <bean id="helloDAOProxy" class=
+            "org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <!--指定事务管理器-->
+        <property name="transactionManager">
+            <ref bean="transactionManager"/>
+        </property>
+        <!--指定要代理的类-->
+        <property name="target">
+            <ref bean="helloDAO"/>
+        </property>
+        <!--如果当前没有事务，就新建一个事务-->
+        <property name="transactionAttributes">
+            <props>
+                <!--对代理类中的create()方法进行事务管理：
+                PROPAGATION_REQUIRED：如果当前没有事务，就新建一个事务；
+                PROPAGATION_SUPPORTS：如果当前没有事务，就以非事务方式执行；
+                PROPAGATION_MANDATORY：如果当前没有事务，就抛出异常；
+                PROPAGATION_REQUIRES_NEW：新建事务，如果当前存在事务，把当前事务挂起；
+                PROPAGATION_NOT_SUPPORTED：以非事务方式执行操作，如果当前存在事务，把当前事务挂起；
+                PROPAGATION_NEVER：以非事务方式执行，如果当前存在事务，则抛出异常。-->
+                <prop key="create*">PROPAGATION_REQUIRED</prop>
+            </props>
         </property>
     </bean>
 </beans>

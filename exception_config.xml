@@ -10,7 +10,8 @@
     <bean id="logic1" class="com.qzj.learn.Logic1"/>
     <bean id="logic2" class="com.qzj.learn.Logic2"/>
     <!--Advisor-->
-    <bean id="exceptionHanlderAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <bean id="exceptionHanlderAdvisor" class=
+            "org.springframework.aop.support.RegexpMethodPointcutAdvisor">
         <property name="advice">
             <ref bean="exceptionHandler"/>
         </property>
@@ -19,7 +20,8 @@
             <value>.*.*</value>
         </property>
     </bean>
-    <bean id="timeHanlderAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <bean id="timeHanlderAdvisor" class=
+            "org.springframework.aop.support.RegexpMethodPointcutAdvisor">
         <property name="advice">
             <ref bean="timeHandler"/>
         </property>
@@ -29,7 +31,8 @@
         </property>
     </bean>
     <!--使用自动代理-->
-<!--    <bean id="autoProxyCreator" class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>-->
+<!--    <bean id="autoProxyCreator" class=-->
+<!--            "org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>-->
 
     <!--使用ProxyFactoryBean创建AOP代理-->
     <bean id="logic1Proxy" class="org.springframework.aop.framework.ProxyFactoryBean">
